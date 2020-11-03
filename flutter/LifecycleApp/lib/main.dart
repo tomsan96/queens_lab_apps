@@ -9,27 +9,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/',
+      routes: {
+        '/': (_) => new Home(),
+        '/second': (_) => new Second(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class Home extends StatefulWidget {
+  Home({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomeState createState() => _HomeState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  int _counter = 0;
+class _HomeState extends State<Home> with WidgetsBindingObserver {
+
   AppLifecycleState _state;
 
   @override
@@ -48,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   @override
-  void didUpdateWidget(MyHomePage oldWidget) {
+  void didUpdateWidget(Home oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     debugPrint('didUpdateWidget');
@@ -65,38 +64,55 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     print('state = $state');
   }
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-      debugPrint('Parent widget: _incrementCounter(), counter = $_counter');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+    return new Scaffold(
+      appBar: new AppBar(
+        title: const Text('Home'),
+      ),
+      body: new Center(
+        child :Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+            '画面遷移します。',
+            ),
+          new RaisedButton(
+            onPressed: (){
+              Navigator.of(context).pushReplacementNamed('/second');
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Second extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: const Text('Second'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            new RaisedButton(
+                onPressed: (){
+                  Navigator.of(context).pushReplacementNamed('/');
+                }),
             Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              '画面遷移しました。',
             ),
           ],
+
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+
   }
+
 }
