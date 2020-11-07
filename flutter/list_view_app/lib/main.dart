@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:list_view_app/SecondPage.dart';
 
 void main() {
   runApp(MyApp(
@@ -37,16 +38,27 @@ class MyApp extends StatelessWidget {
 
                     Expanded(
                       child:ListTile(
-                        title: item.buildTitle(context),
-                        subtitle: item.buildSubtitle(context),
+//                        title: item.buildTitle(context),
+                        title: Text(item.buildTitle(context)),
+//                        subtitle: item.buildSubtitle(context),
+                        subtitle: Text(item.buildSubtitle(context)),
+
                       ),
                     ),
                      Container(
                        padding: EdgeInsets.only(
                          right: 10,
                        ),
-                       child: Icon(
-                         Icons.add,
+                       child: IconButton(
+                         color: Colors.blue,
+                         icon:Icon(Icons.add),
+                         onPressed: () => {
+                           Navigator.push(
+                               context,
+//                               MaterialPageRoute(builder: (context)=>SecondPage(paramText: item.buildSubtitle(context).toString()),)
+                               MaterialPageRoute(builder: (context)=>SecondPage(paramText: item.buildSubtitle(context)),)
+                           ),
+                         },
                        ),
                      ) ,
                 ],
@@ -63,8 +75,10 @@ class MyApp extends StatelessWidget {
 
 abstract class ListItem {
 
-  Widget buildTitle(BuildContext context);
-  Widget buildSubtitle(BuildContext context);
+//  Widget buildTitle(BuildContext context);
+  String buildTitle(BuildContext context);
+//  Widget buildSubtitle(BuildContext context);
+  String buildSubtitle(BuildContext context);
 }
 
 class MessageItem implements ListItem {
@@ -76,8 +90,10 @@ class MessageItem implements ListItem {
     this.body = WordPair.random().asPascalCase;
   }
 
-  Widget buildTitle(BuildContext context) => Text(sender);
+//  Widget buildTitle(BuildContext context) => Text(sender);
+  String buildTitle(BuildContext context) => sender;
 
-  Widget buildSubtitle(BuildContext context) => Text(body);
+//  Widget buildSubtitle(BuildContext context) => Text(body);
+  String buildSubtitle(BuildContext context) => body;
 }
 
