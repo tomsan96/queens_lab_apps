@@ -4,10 +4,7 @@ import 'package:english_words/english_words.dart';
 void main() {
   runApp(MyApp(
     items: List<ListItem>.generate(
-      1000,
-          (i) => i % 6 == 0
-          ? HeadingItem("Heading $i")
-          : MessageItem("Sender $i"),
+      1000, (i) => MessageItem("Sender $i"),
     ),
   ));
 }
@@ -20,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = 'Mixed List';
+    final title = 'listView';
 
     return MaterialApp(
       title: title,
@@ -33,9 +30,28 @@ class MyApp extends StatelessWidget {
           itemCount: items.length,
           itemBuilder: (context, index) {
             final item = items[index];
-            return ListTile(
-              title: item.buildTitle(context),
-              subtitle: item.buildSubtitle(context),
+            return Card(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+
+                    Expanded(
+                      child:ListTile(
+                        title: item.buildTitle(context),
+                        subtitle: item.buildSubtitle(context),
+                      ),
+                    ),
+                     Container(
+                       padding: EdgeInsets.only(
+                         right: 10,
+                       ),
+                       child: Icon(
+                         Icons.add,
+                       ),
+                     ) ,
+                ],
+
+              ),
             );
           },
         ),
@@ -49,20 +65,6 @@ abstract class ListItem {
 
   Widget buildTitle(BuildContext context);
   Widget buildSubtitle(BuildContext context);
-}
-
-class HeadingItem implements ListItem {
-  final String heading;
-
-  HeadingItem(this.heading);
-
-  Widget buildTitle(BuildContext context) {
-    return Text(
-      heading,
-      style: Theme.of(context).textTheme.headline5,
-    );
-  }
-  Widget buildSubtitle(BuildContext context) => null;
 }
 
 class MessageItem implements ListItem {
