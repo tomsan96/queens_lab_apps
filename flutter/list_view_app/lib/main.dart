@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:list_view_app/SecondPage.dart';
+import 'dart:math' as math;
 
 void main() {
   runApp(MyApp(
@@ -20,6 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = 'listView';
 
+    var randomMath = new math.Random().nextInt(5) + 1;
+
     return MaterialApp(
       title: title,
       home: Scaffold(
@@ -31,6 +34,7 @@ class MyApp extends StatelessWidget {
           itemCount: items.length,
           itemBuilder: (context, index) {
             final item = items[index];
+            var leadImage = item.buildImage(context) == null ? 'images/no_image.jpg': item.buildImage(context);
             return Card(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,10 +42,13 @@ class MyApp extends StatelessWidget {
 
                     Expanded(
                       child:ListTile(
+//                        leading: Image.asset(item.buildImage(context) == null ? 'images/image1.jpeg', item.buildImage(context)),
+                        leading: Image.asset(leadImage),
 //                        title: item.buildTitle(context),
                         title: Text(item.buildTitle(context)),
 //                        subtitle: item.buildSubtitle(context),
                         subtitle: Text(item.buildSubtitle(context)),
+
 
                       ),
                     ),
@@ -56,7 +63,12 @@ class MyApp extends StatelessWidget {
                            Navigator.push(
                                context,
 //                               MaterialPageRoute(builder: (context)=>SecondPage(paramText: item.buildSubtitle(context).toString()),)
-                               MaterialPageRoute(builder: (context)=>SecondPage(paramText: item.buildSubtitle(context)),)
+                               MaterialPageRoute(
+                                 builder: (context)=>SecondPage(
+                                   subtitleText: item.buildSubtitle(context),
+                                   imageText: leadImage,
+                                 ),
+                               )
                            ),
                          },
                        ),
@@ -79,15 +91,20 @@ abstract class ListItem {
   String buildTitle(BuildContext context);
 //  Widget buildSubtitle(BuildContext context);
   String buildSubtitle(BuildContext context);
+  
+  String buildImage(BuildContext context);
 }
 
 class MessageItem implements ListItem {
   String sender;
   String body;
+  String imagePath;
 
   MessageItem(sender) {
     this.sender = sender;
     this.body = WordPair.random().asPascalCase;
+    int imageNum = (new math.Random().nextInt(5) + 1);
+    this.imagePath = 'images/image'+ imageNum.toString() + '.jpeg' ;
   }
 
 //  Widget buildTitle(BuildContext context) => Text(sender);
@@ -95,5 +112,7 @@ class MessageItem implements ListItem {
 
 //  Widget buildSubtitle(BuildContext context) => Text(body);
   String buildSubtitle(BuildContext context) => body;
+  
+  String buildImage(BuildContext context) => imagePath;
 }
 

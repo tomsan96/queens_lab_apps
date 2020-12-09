@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class SecondPage extends StatelessWidget {
 
-  final String paramText;
+  final String subtitleText;
+  final String imageText;
 
-  SecondPage({Key key, @required this.paramText}) : super(key: key);
+  SecondPage({Key key, @required this.subtitleText, @required this.imageText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,20 @@ class SecondPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: <Widget>[
-              Text(paramText),
+              Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Text(
+                  subtitleText,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Image.asset(
+                imageText,
+              ),
+
             ],
           ),
         ),
