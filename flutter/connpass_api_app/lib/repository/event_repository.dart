@@ -1,4 +1,4 @@
-class EventsRepository{
+class EventRepository{
   final int eventId;
   final String title;
   final String catchMessage;
@@ -10,7 +10,7 @@ class EventsRepository{
   final int limit;
   final String eventType;
 
-  EventsRepository({
+  EventRepository({
     this.eventId,
     this.title,
     this.catchMessage,
@@ -36,8 +36,8 @@ class EventsRepository{
 //    eventType: json['event_type'],
 //  );
 
-  factory EventsRepository.fromJson(Map<String, dynamic> json) {
-    return EventsRepository(
+  factory EventRepository.fromJson(Map<String, dynamic> json) {
+    return EventRepository(
         eventId: json['event_id'],
         title: json['title'],
         catchMessage: json['catch'],

@@ -1,10 +1,10 @@
-import 'package:connpass_api_app/repository/events_repository.dart';
+import 'package:connpass_api_app/repository/event_repository.dart';
 
 class ConnpassRepository {
   final int resultsReturned;
   final int resultsAvailable;
   final int resultsStart;
-  final List<EventsRepository> events;
+  final List<EventRepository> events;
 
   ConnpassRepository({
     this.resultsReturned,
@@ -19,7 +19,7 @@ class ConnpassRepository {
         resultsAvailable: json['results_available'],
         resultsStart: json['results_start'],
         events: json['events'] != null
-          ? json['events'].map<EventsRepository>((e) => EventsRepository.fromJson(e)).toList()
+          ? json['events'].map<EventRepository>((e) => EventRepository.fromJson(e)).toList()
               : null);
   }
 }

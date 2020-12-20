@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:connpass_api_app/detail.dart';
 import 'package:connpass_api_app/repository/connpass_repository.dart';
-import 'package:connpass_api_app/repository/events_repository.dart';
+import 'package:connpass_api_app/repository/event_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -148,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         if(_repository.events != null) {
-          final EventsRepository event = _repository.events[index];
+          final EventRepository event = _repository.events[index];
           return _resultCard(event);
         } else {
           return null;
@@ -158,14 +158,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _resultCard(EventsRepository eventsRepository) {
+  Widget _resultCard(EventRepository eventRepository) {
     return Card(
       child: InkWell(
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context)=>Detail(event: eventsRepository),
+                builder: (context)=>Detail(event: eventRepository),
               )
           );
         },
@@ -175,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: EdgeInsets.all(12.0),
               child: Text(
-                eventsRepository.title
+                eventRepository.title
               ),
             )
           ],
