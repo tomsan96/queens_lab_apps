@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:connpass_api_app/Repository/ConnpassRepository.dart';
-import 'package:connpass_api_app/Repository/EventsRepository.dart';
+import 'package:connpass_api_app/repository/connpass_repository.dart';
+import 'package:connpass_api_app/repository/events_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
