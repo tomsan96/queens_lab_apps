@@ -9,6 +9,8 @@ class EventRepository{
   final String endedAt;
   final int limit;
   final String eventType;
+  final String address;
+  final String place;
 
   EventRepository({
     this.eventId,
@@ -20,7 +22,9 @@ class EventRepository{
     this.startedAt,
     this.endedAt,
     this.limit,
-    this.eventType
+    this.eventType,
+    this.address,
+    this.place,
   });
 
 //  factory EventsRepository.fromJson(Map<String, dynamic> json) => EventsRepository(
@@ -48,6 +52,8 @@ class EventRepository{
         endedAt: json['ended_at'],
         limit: json['limit'],
         eventType: json['event_type'],
+        address: json['address'],
+        place: json['place'],
     );
   }
 
@@ -63,5 +69,7 @@ class EventRepository{
     'ended_at': endedAt,
     'limit': limit,
     'event_type': eventType,
+    'address': address,
+    'place': place,
   };
 }

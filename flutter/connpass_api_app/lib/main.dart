@@ -55,10 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
               _searchResult(),
             ],
         ),
-
-
       ),
-
     );
   }
 
@@ -86,9 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
       ],
-
-
-
     );
 
   }
@@ -131,16 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }
   }
-
-//  Widget _searchResult() {
-//    return ListView(
-//      shrinkWrap: true,
-//      physics: NeverScrollableScrollPhysics(),
-//      children:  _repository.events?.map((event) => ListTile(
-//        title: Text(event.title),
-//      ))?.toList() ?? []
-//    );
-//  }
 
   Widget _searchResult() {
     return ListView.builder(
