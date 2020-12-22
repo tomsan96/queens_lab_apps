@@ -27,19 +27,6 @@ class EventRepository{
     this.place,
   });
 
-//  factory EventsRepository.fromJson(Map<String, dynamic> json) => EventsRepository(
-//    eventId: json['event_id'],
-//    title: json['title'],
-//    catchMessage: json['catch'],
-//    description: json['description'],
-//    eventUrl: json['event_url'],
-//    hashTag: json['hash_tag'],
-//    startedAt: json['started_at'],
-//    endedAt: json['ended_at'],
-//    limit: json['limit'],
-//    eventType: json['event_type'],
-//  );
-
   factory EventRepository.fromJson(Map<String, dynamic> json) {
     return EventRepository(
         eventId: json['event_id'],
