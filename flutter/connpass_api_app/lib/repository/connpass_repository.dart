@@ -1,11 +1,6 @@
 import 'package:connpass_api_app/repository/event_repository.dart';
 
 class ConnpassRepository {
-  final int resultsReturned;
-  final int resultsAvailable;
-  final int resultsStart;
-  final List<EventRepository> events;
-
   ConnpassRepository({
     this.resultsReturned,
     this.resultsAvailable,
@@ -15,11 +10,18 @@ class ConnpassRepository {
 
   factory ConnpassRepository.fromJson(Map<String, dynamic> json) {
     return ConnpassRepository(
-        resultsReturned: json['results_returned'],
-        resultsAvailable: json['results_available'],
-        resultsStart: json['results_start'],
+        resultsReturned: json['results_returned'] as int,
+        resultsAvailable: json['results_available'] as int,
+        resultsStart: json['results_start'] as int,
         events: json['events'] != null
-          ? json['events'].map<EventRepository>((e) => EventRepository.fromJson(e)).toList()
-              : null);
+          ? json['events'].map<EventRepository>((dynamic e)
+            => EventRepository.fromJson(e as Map<String, dynamic>))
+              .toList() as List<EventRepository>
+                : null);
   }
+
+  final int resultsReturned;
+  final int resultsAvailable;
+  final int resultsStart;
+  final List<EventRepository> events;
 }

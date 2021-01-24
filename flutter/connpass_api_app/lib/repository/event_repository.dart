@@ -1,17 +1,4 @@
 class EventRepository{
-  final int eventId;
-  final String title;
-  final String catchMessage;
-  final String description;
-  final String eventUrl;
-  final String hashTag;
-  final String startedAt;
-  final String endedAt;
-  final int limit;
-  final String eventType;
-  final String address;
-  final String place;
-
   EventRepository({
     this.eventId,
     this.title,
@@ -29,23 +16,35 @@ class EventRepository{
 
   factory EventRepository.fromJson(Map<String, dynamic> json) {
     return EventRepository(
-        eventId: json['event_id'],
-        title: json['title'],
-        catchMessage: json['catch'],
-        description: json['description'],
-        eventUrl: json['event_url'],
-        hashTag: json['hash_tag'],
-        startedAt: json['started_at'],
-        endedAt: json['ended_at'],
-        limit: json['limit'],
-        eventType: json['event_type'],
-        address: json['address'],
-        place: json['place'],
+        eventId: json['event_id'] as int,
+        title: json['title'] as String,
+        catchMessage: json['catch'] as String,
+        description: json['description'] as String,
+        eventUrl: json['event_url']as String,
+        hashTag: json['hash_tag']as String,
+        startedAt: json['started_at'] as String,
+        endedAt: json['ended_at'] as String,
+        limit: json['limit'] as int,
+        eventType: json['event_type'] as String,
+        address: json['address'] as String,
+        place: json['place'] as String,
     );
   }
 
+  final int eventId;
+  final String title;
+  final String catchMessage;
+  final String description;
+  final String eventUrl;
+  final String hashTag;
+  final String startedAt;
+  final String endedAt;
+  final int limit;
+  final String eventType;
+  final String address;
+  final String place;
 
-  Map<String, dynamic> toJson() => {
+  Map<String, Object> toJson() => {
     'event_id': eventId,
     'title': title,
     'catch': catchMessage,

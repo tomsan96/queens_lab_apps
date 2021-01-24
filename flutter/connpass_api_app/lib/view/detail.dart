@@ -2,18 +2,17 @@ import 'package:connpass_api_app/repository/event_repository.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import "package:intl/intl.dart";
+import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class Detail extends StatelessWidget {
-  final EventRepository event;
-  Detail({Key key, @required this.event}) : super(key: key);
-
+  EventRepository event;
   @override
   Widget build(BuildContext context) {
+    event = ModalRoute.of(context).settings.arguments as EventRepository;
     return Scaffold(
       appBar: AppBar(
-        title: Text('イベント詳細'),
+        title: const Text('イベント詳細'),
       ),
      body: Container(
        child: Column(
@@ -37,12 +36,12 @@ class Detail extends StatelessWidget {
 
   Widget titleSection () {
     return Container(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           Text(
             event.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
             ),
@@ -69,7 +68,7 @@ class Detail extends StatelessWidget {
   }
 
   Widget buildDetail() {
-    Map<String, String> detailMap = {
+    final detailMap = {
       '開催日時': changeTimeFormat(event.startedAt),
       '終了日時': changeTimeFormat(event.endedAt),
       '会場': event.place,
@@ -90,11 +89,11 @@ class Detail extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                10.0,
-                5.0,
-                5.0,
-                5.0,
+              padding: const EdgeInsets.fromLTRB(
+                10,
+                5,
+                5,
+                5,
               ),
               child: Text(key == null ? '' : key),
             ),
@@ -102,11 +101,11 @@ class Detail extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                10.0,
-                5.0,
-                10.0,
-                5.0,
+              padding: const EdgeInsets.fromLTRB(
+                10,
+                5,
+                10,
+                5,
               ),
               child: Text(value == null ? '' : value),
             ),
@@ -123,22 +122,22 @@ class Detail extends StatelessWidget {
 
   Widget buildUrlLink() {
     return Container(
-      padding: EdgeInsets.fromLTRB(
-        10.0, 15.0, 0, 0
+      padding: const EdgeInsets.fromLTRB(
+        10, 15, 0, 0
       ),
       width: double.infinity,
       child: RichText(
         textAlign: TextAlign.left,
         text: TextSpan(
           children: [
-            TextSpan(
+            const TextSpan(
               style: TextStyle(
                 color: Colors.black,
               ),
               text: '公式サイトは',
             ),
             TextSpan(
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.blue,
                 decoration: TextDecoration.underline,
               ),
@@ -160,11 +159,11 @@ class Detail extends StatelessWidget {
 
   // ISO-8601形式を「○○年○○月○○日○○時○○分」に変換
   String changeTimeFormat(String before) {
-    initializeDateFormatting("ja_JP");
+    initializeDateFormatting('ja_JP');
 
-    DateTime datetime = DateTime.parse(before);
-    var formatter = new DateFormat('yyyy年MM月dd日HH時mm分', "ja_JP");
-    var formatted = formatter.format(datetime);
+    final datetime = DateTime.parse(before);
+    final formatter = DateFormat('yyyy年MM月dd日HH時mm分', 'ja_JP');
+    final formatted = formatter.format(datetime);
     return formatted;
   }
 }
