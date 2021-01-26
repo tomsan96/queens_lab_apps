@@ -1,5 +1,5 @@
-class EventRepository{
-  EventRepository({
+class EventModel{
+  EventModel({
     this.eventId,
     this.title,
     this.catchMessage,
@@ -14,20 +14,20 @@ class EventRepository{
     this.place,
   });
 
-  factory EventRepository.fromJson(Map<String, dynamic> json) {
-    return EventRepository(
-        eventId: json['event_id'] as int,
-        title: json['title'] as String,
-        catchMessage: json['catch'] as String,
-        description: json['description'] as String,
-        eventUrl: json['event_url']as String,
-        hashTag: json['hash_tag']as String,
-        startedAt: json['started_at'] as String,
-        endedAt: json['ended_at'] as String,
-        limit: json['limit'] as int,
-        eventType: json['event_type'] as String,
-        address: json['address'] as String,
-        place: json['place'] as String,
+  factory EventModel.fromJson(Map<String, dynamic> json) {
+    return EventModel(
+      eventId: json['event_id'] as int,
+      title: json['title'] as String,
+      catchMessage: json['catch'] as String,
+      description: json['description'] as String,
+      eventUrl: json['event_url']as String,
+      hashTag: json['hash_tag']as String,
+      startedAt: json['started_at'] as String,
+      endedAt: json['ended_at'] as String,
+      limit: json['limit'] as int,
+      eventType: json['event_type'] as String,
+      address: json['address'] as String,
+      place: json['place'] as String,
     );
   }
 

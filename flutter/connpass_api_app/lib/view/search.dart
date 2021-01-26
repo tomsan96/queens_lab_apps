@@ -1,10 +1,7 @@
-import 'dart:convert';
-
-import 'package:connpass_api_app/view/detail.dart';
 import 'package:connpass_api_app/repository/connpass_repository.dart';
-import 'package:connpass_api_app/repository/event_repository.dart';
+import 'package:connpass_api_app/model/connpass_model.dart';
+import 'package:connpass_api_app/model/event_model.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class Search extends StatefulWidget {
   Search({Key key, this.title}) : super(key: key);
@@ -17,7 +14,8 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   final _controller = TextEditingController();
-  var _repository = ConnpassRepository();
+  var _connpassModel = ConnpassModel();
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,34 +64,21 @@ class _SearchState extends State<Search> {
 
   }
   void _search() {
-    _getRepository(_controller.text).then((repository) {
+    ConnpassRepository().getSearchModel(_controller.text).then((model) {
       setState(() {
-        _repository = repository;
+        _connpassModel = model;
       });
     });
   }
 
-  Future<ConnpassRepository> _getRepository(String searchWord) async {
-    final response = await http.get('https://connpass.com/api/v1/event/?count=100&order=1&keyword=$searchWord');
-    if(response.statusCode == 200) {
-      final parsed =
-      json.decode(response.body).cast<String, dynamic>()
-      as Map<String, dynamic>;
-      final repository = ConnpassRepository.fromJson(parsed);
-      return repository;
-    } else {
-      throw Exception('Fail to search repository');
-    }
-  }
-
   Widget _searchCount() {
-    if(_repository.resultsReturned == null) {
+    if(_connpassModel.resultsReturned == null) {
       return Container();
-    } else if(_repository.resultsReturned < 100) {
+    } else if(_connpassModel.resultsReturned < 100) {
       return Padding(
           padding: const EdgeInsets.all(12),
           child: Text(
-              '検索結果は${_repository.resultsReturned.toString()}件です。'
+              '検索結果は${_connpassModel.resultsReturned.toString()}件です。'
           )
       );
     } else {
@@ -112,25 +97,25 @@ class _SearchState extends State<Search> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
-        if(_repository.events != null) {
-          final event = _repository.events[index];
+        if(_connpassModel.events != null) {
+          final event = _connpassModel.events[index];
           return _resultCard(event);
         } else {
           return null;
         }
       },
-      itemCount: _repository.resultsReturned,
+      itemCount: _connpassModel.resultsReturned,
     );
   }
 
-  Widget _resultCard(EventRepository eventRepository) {
+  Widget _resultCard(EventModel eventModel) {
     return Card(
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(
               context,
               '/detail',
-              arguments: eventRepository,
+              arguments: eventModel,
 
           );
         },
@@ -140,7 +125,7 @@ class _SearchState extends State<Search> {
             Padding(
               padding: const EdgeInsets.all(12),
               child: Text(
-                  eventRepository.title
+                  eventModel.title
               ),
             )
           ],

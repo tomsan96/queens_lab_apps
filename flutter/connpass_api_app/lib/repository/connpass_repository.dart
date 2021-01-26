@@ -1,27 +1,22 @@
-import 'package:connpass_api_app/repository/event_repository.dart';
+import 'dart:convert';
 
+import 'package:connpass_api_app/model/event_model.dart';
+import 'package:connpass_api_app/model/connpass_model.dart';
+import 'package:http/http.dart' as http;
 class ConnpassRepository {
-  ConnpassRepository({
-    this.resultsReturned,
-    this.resultsAvailable,
-    this.resultsStart,
-    this.events
-  });
 
-  factory ConnpassRepository.fromJson(Map<String, dynamic> json) {
-    return ConnpassRepository(
-        resultsReturned: json['results_returned'] as int,
-        resultsAvailable: json['results_available'] as int,
-        resultsStart: json['results_start'] as int,
-        events: json['events'] != null
-          ? json['events'].map<EventRepository>((dynamic e)
-            => EventRepository.fromJson(e as Map<String, dynamic>))
-              .toList() as List<EventRepository>
-                : null);
+  Future<ConnpassModel> getSearchModel(String searchWord) async {
+    final response = await http.get('https://connpass.com/api/v1/event/?count=100&order=1&keyword=$searchWord');
+    if(response.statusCode == 200) {
+      final parsed =
+      json.decode(response.body).cast<String, dynamic>()
+      as Map<String, dynamic>;
+      final model = ConnpassModel.fromJson(parsed);
+      return model;
+    } else {
+      throw Exception('Fail to search repository');
+    }
   }
 
-  final int resultsReturned;
-  final int resultsAvailable;
-  final int resultsStart;
-  final List<EventRepository> events;
 }
+

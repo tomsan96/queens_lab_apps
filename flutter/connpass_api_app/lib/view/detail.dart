@@ -1,4 +1,4 @@
-import 'package:connpass_api_app/repository/event_repository.dart';
+import 'package:connpass_api_app/model/event_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,10 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class Detail extends StatelessWidget {
-  EventRepository event;
+  EventModel event;
   @override
   Widget build(BuildContext context) {
-    event = ModalRoute.of(context).settings.arguments as EventRepository;
+    event = ModalRoute.of(context).settings.arguments as EventModel;
     return Scaffold(
       appBar: AppBar(
         title: const Text('イベント詳細'),
